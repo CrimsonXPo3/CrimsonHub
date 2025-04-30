@@ -1,5 +1,5 @@
-local function verifyWhitelist()
-    local localUserIds = {
+local success, isWhitelisted = pcall(function()
+    local allowedUserIds = {
         694435774,
         5586940247,
         7319184415,
@@ -10,37 +10,25 @@ local function verifyWhitelist()
     }
     
     local player = game.Players.LocalPlayer
-    local localCheck = false
-    
-    for _, id in ipairs(localUserIds) do
-        if player.UserId == id then
-            localCheck = true
-            break
+
+    local function isAuthorized()
+        for _, id in ipairs(allowedUserIds) do
+            if player.UserId == id then
+                return true
+            end
         end
-    end
-    
-    if not localCheck then
         return false
     end
-    
-    local remoteSuccess, remoteResult = pcall(function()
-        local whitelistUrl = "https://raw.githubusercontent.com/CrimsonXPo3/CrimsonHub/refs/heads/main/Whitelist"
-        local whitelistScript = game:HttpGet(whitelistUrl, true)
-        local whitelistFunc = loadstring(whitelistScript)
-        return whitelistFunc()
-    end)
-    
-    if not remoteSuccess then
-        return false
-    end
-    
-    if remoteResult ~= true then
-        return false
-    end
-    
-    return true
+
+    return isAuthorized()
+end)
+
+if not success then
+    warn("Whitelist check failed")
+    return
 end
 
-if not verifyWhitelist() then
+if not isWhitelisted then
+    warn("You are not whitelisted")
     return
 end
