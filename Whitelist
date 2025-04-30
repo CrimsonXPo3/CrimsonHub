@@ -1,0 +1,25 @@
+local allowedUserIds = {
+    694435774,
+    5586940247,
+    7319184415,
+	  2982476041,
+	  1008601724,
+	  8233218780,
+	  7381719922
+
+    
+}
+local player = game.Players.LocalPlayer
+
+local function isAuthorized()
+    for _, id in ipairs(allowedUserIds) do
+        if player.UserId == id then
+            return true
+        end
+    end
+    return false
+end
+
+if not isAuthorized() then
+    return
+end
