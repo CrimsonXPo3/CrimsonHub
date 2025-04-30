@@ -11,24 +11,24 @@ local success, isWhitelisted = pcall(function()
     
     local player = game.Players.LocalPlayer
 
-    local function isAuthorized()
-        for _, id in ipairs(allowedUserIds) do
-            if player.UserId == id then
-                return true
-            end
-        end
-        return false
+    if not player or not player.UserId then
+        error("Failed to get player information")
     end
 
-    return isAuthorized()
+    for _, id in ipairs(allowedUserIds) do
+        if player.UserId == id then
+            print("[Whitelist] User is whitelisted!")
+            return true
+        end
+    end
+    
+    return false
 end)
 
 if not success then
-    warn("Whitelist check failed")
     return
 end
 
 if not isWhitelisted then
-    warn("You are not whitelisted")
     return
 end
