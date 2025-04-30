@@ -5,7 +5,6 @@ local success, isWhitelisted = pcall(function()
         7319184415,
         2982476041,
         1008601724,
-        8233218780,
         7381719922
     }
     
