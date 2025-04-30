@@ -1,22 +1,34 @@
-local allowedUserIds = {
-    694435774,
-    5586940247,
-    7319184415,
-    2982476041,
-    1008601724,
-    8233218780,
-    7381719922
-}
+local success, isWhitelisted = pcall(function()
+    local allowedUserIds = {
+        694435774,
+        5586940247,
+        7319184415,
+        2982476041,
+        1008601724,
+        8233218780,
+        7381719922
+    }
+    
+    local player = game.Players.LocalPlayer
 
-local player = game:GetService("Players").LocalPlayer
-
-local function isAuthorized()
-    for _, id in ipairs(allowedUserIds) do
-        if player.UserId == id then
-            return true
+    local function isAuthorized()
+        for _, id in ipairs(allowedUserIds) do
+            if player.UserId == id then
+                return true
+            end
         end
+        return false
     end
-    return false
+
+    return isAuthorized()
+end)
+
+if not success then
+    warn("Whitelist check failed")
+    return
 end
 
-return isAuthorized()
+if not isWhitelisted then
+    warn("You are not whitelisted")
+    return
+end
