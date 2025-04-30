@@ -1,4 +1,4 @@
-local allowedUserIds = {
+return {
     694435774,
     5586940247,
     7319184415,
@@ -7,13 +7,3 @@ local allowedUserIds = {
     8233218780,
     7381719922
 }
-
-local player = game:GetService("Players").LocalPlayer
-
-for _, id in ipairs(allowedUserIds) do
-    if player.UserId == id then
-        return true
-    end
-end
-
-return false
